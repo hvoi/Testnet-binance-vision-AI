@@ -1,0 +1,99 @@
+================================================================================
+          DESCRIPTION OF ALL TEST AND UTILITY SCRIPTS IN THE PROJECT
+================================================================================
+
+This directory contains tests (run via pytest) and utility scripts 
+(run directly via python) designed to test the bot's modules.
+
+All launch commands are defined to be executed from the root folder:
+C:\hvoi\Projekt q1
+
+--------------------------------------------------------------------------------
+1. Automated Tests (Pytest)
+--------------------------------------------------------------------------------
+
+These tests run automatically when calling pytest. They test the logic
+of internal functions without making real network requests.
+
+* conftest.py
+  - Description: Pytest configuration file.
+  - Purpose: Automatically adds the project root "Testnet binance vision AI" 
+    to Python's path (sys.path). This allows running tests from any folder.
+
+* test_ai_service.py
+  - Description: Tests the AI integration module (ai_service.py).
+  - Verification: Checks the correctness of loading config.json and the 
+    news sentiment evaluation function (evaluate_sentiment) using mock objects.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" -m pytest "C:\hvoi\Projekt q1\Testnet binance vision AI\tests\test_ai_service.py"
+
+* test_bot.py
+  - Description: Basic trading bot initialization test.
+  - Verification: Verifies successful launch of BinanceTestnetTrader in simulation mode (dry-run).
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" -m pytest "C:\hvoi\Projekt q1\Testnet binance vision AI\tests\test_bot.py"
+
+* test_dashboard.py
+  - Description: Tests the monitoring panel module (dashboard.py).
+  - Verification: Verifies safe loading of data (load_data) when reading non-existent files.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" -m pytest "C:\hvoi\Projekt q1\Testnet binance vision AI\tests\test_dashboard.py"
+
+* test_live_trader.py
+  - Description: Tests execution logic in live_trader.py.
+  - Verification: Checks the lot size quantization function (quantize_qty) and the 
+    retry mechanism during network failures (run_with_retry).
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" -m pytest "C:\hvoi\Projekt q1\Testnet binance vision AI\tests\test_live_trader.py"
+
+* test_notifier.py
+  - Description: Tests the Telegram notifications module (notifier.py).
+  - Verification: Verifies that sending is skipped when the notifier is inactive and 
+    checks behavior during network failures.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" -m pytest "C:\hvoi\Projekt q1\Testnet binance vision AI\tests\test_notifier.py"
+
+* test_state_manager.py
+  - Description: Tests persistence (state_manager.py).
+  - Verification: Verifies reading and writing of open positions by the bot to a local SQLite database.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" -m pytest "C:\hvoi\Projekt q1\Testnet binance vision AI\tests\test_state_manager.py"
+
+
+--------------------------------------------------------------------------------
+2. Utility Scripts for Manual Execution (Python CLI)
+--------------------------------------------------------------------------------
+
+These scripts perform real actions (requests to LLM or sending messages to Telegram) 
+and must be executed by the user manually.
+
+* test_llm.py
+  - Description: Verifies connection to your LLM in LM Studio.
+  - Verification: Makes a real POST request to http://localhost:1234/v1 
+    with a test Bitcoin news item and prints the AI verdict to the console.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" "C:\hvoi\Projekt q1\Testnet binance vision AI\tests\test_llm.py"
+
+* test_ai.py
+  - Description: Verifies LLM calibration and sentiment analysis.
+  - Verification: Runs three different test news items (positive, negative, 
+    neutral) through evaluate_sentiment() and compares output with expected verdict.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" "C:\hvoi\Projekt q1\Testnet binance vision AI\tests\test_ai.py"
+
+* test_tele.py
+  - Description: Verifies instant Telegram notifications sending.
+  - Verification: Sends a test HTML message to your configured Telegram channel.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" "C:\hvoi\Projekt q1\Testnet binance vision AI\tests\test_tele.py"
+
+* test_calc.py
+  - Description: Demonstration console calculator.
+  - Purpose: Example of CLI argument parsing (argparse).
+  - Example Launch Command (adding numbers 10 and 5):
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" "C:\hvoi\Projekt q1\Testnet binance vision AI\tests\test_calc.py" add 10 5
+
+================================================================================
+To run all pytest tests with a single command use:
+& "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" -m pytest "C:\hvoi\Projekt q1\Testnet binance vision AI\tests"
+================================================================================

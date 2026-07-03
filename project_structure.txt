@@ -1,0 +1,132 @@
+================================================================================
+         FILE AND DIRECTORY STRUCTURE GUIDE FOR TRADE BOT AI PROJECT
+================================================================================
+
+This guide describes in detail the purpose of each folder and file in the directory:
+C:\hvoi\Projekt q1\Testnet binance vision AI
+
+--------------------------------------------------------------------------------
+1. Directory Descriptions (Folders)
+--------------------------------------------------------------------------------
+
+* .venv/
+  - Purpose: Python virtual environment.
+  - Contents: Locally installed libraries (e.g., streamlit, pandas, pytest, httpx).
+  - Usage: Must always be activated before running scripts.
+
+* tests/
+  - Purpose: Test cases and verification scripts.
+  - Contents: Automated tests (pytest) and manual connection debugging scripts.
+  - Usage: Contains a tests_description.txt file with a full description of each test.
+
+* data/
+  - Purpose: Local data storage.
+  - Contents: Historical quotes, price tables, and other external datasets.
+
+* .github/
+  - Purpose: GitHub integration.
+  - Contents: Templates, guides, and configuration files for the repository.
+
+* .continue/
+  - Purpose: Configuration for the Continue AI assistant in VS Code.
+
+--------------------------------------------------------------------------------
+2. Description of Python Executable Files (.py) and Launch Commands
+--------------------------------------------------------------------------------
+
+* main.py
+  - Purpose: Single entry point for managing all bot functionality via the console.
+  - Operation: Provides a CLI interface with commands: run backtests, express news analysis, or launch live trading on the testnet.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" "C:\hvoi\Projekt q1\Testnet binance vision AI\main.py" --help
+
+* live_trader.py
+  - Purpose: Main core of the trading bot.
+  - Operation: Runs an infinite loop. Fetches latest news, analyzes them using ai_service.py, calculates risk/position size, and places orders on Binance Testnet. Controls stop-loss and take-profit.
+  - Launch Command (demo mode):
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" "C:\hvoi\Projekt q1\Testnet binance vision AI\live_trader.py" --interval 60 --dry-run
+
+* dashboard.py
+  - Purpose: Interactive Streamlit monitoring dashboard.
+  - Operation: Reads data from trades.csv and news_history.csv, then visualizes balance, open positions, Win Rate, and the latest AI verdicts in the browser.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" -m streamlit run "C:\hvoi\Projekt q1\Testnet binance vision AI\dashboard.py"
+
+* ai_service.py
+  - Purpose: AI integration service.
+  - Operation: Sends news text to local LM Studio server via API and converts model responses to trading signals (EXCLUSIVE_POSITIVE/EXCLUSIVE_NEGATIVE/NEUTRAL).
+  - Usage: Imported by the bot for analysis.
+
+* news_parser.py
+  - Purpose: News stream parser.
+  - Operation: Scans RSS feeds of crypto news and feeds them to the bot.
+  - Usage: Runs automatically in the background within the bot.
+
+* notifier.py
+  - Purpose: Telegram notification module.
+  - Operation: Asynchronously sends formatted messages about trades, errors, and AI signals.
+  - Usage: Runs automatically within the bot.
+
+* state_manager.py
+  - Purpose: Persistence manager to prevent state loss upon bot restarts.
+  - Operation: Saves open order parameters (entry price, volume, direction) to a local SQLite database.
+  - Usage: Automatically imported into the bot.
+
+* fast_backtest.py
+  - Purpose: Script for fast strategy backtesting on historical data.
+  - Operation: Simulates trading based on a prepared CSV file with price and news history, calculating returns without a real exchange connection.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" "C:\hvoi\Projekt q1\Testnet binance vision AI\fast_backtest.py"
+
+* batch_backtests.py
+  - Purpose: Parameter batch optimizer.
+  - Operation: Runs a series of backtests iterating through different values (e.g., different AI importance thresholds, stop-loss levels) to find optimal settings.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" "C:\hvoi\Projekt q1\Testnet binance vision AI\batch_backtests.py"
+
+* plot_balance.py
+  - Purpose: Profitability plotting utility.
+  - Operation: Generates a visual balance chart as an image based on trades.csv.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" "C:\hvoi\Projekt q1\Testnet binance vision AI\plot_balance.py"
+
+* smoke_state_check.py
+  - Purpose: Quick check of the bot's database health.
+  - Launch Command:
+    & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" "C:\hvoi\Projekt q1\Testnet binance vision AI\smoke_state_check.py"
+
+--------------------------------------------------------------------------------
+3. Configuration and Utility Files
+--------------------------------------------------------------------------------
+
+* config.json
+  - Purpose: Core configuration parameters.
+  - Contents: Host and port for LM Studio, default model name, API keys (if applicable).
+  - Usage: Edit parameters manually when changing models or server addresses.
+
+* requirements.txt
+  - Purpose: List of project dependencies.
+  - Usage: To install all packages in the environment, run:
+    pip install -r requirements.txt
+
+* bot_state.sqlite3
+  - Purpose: SQLite database to save the bot's active trade states.
+
+* ai_recommendation.json
+  - Purpose: Temporary file where the bot writes the latest AI verdict. Used for instant recommendation updates on the Streamlit dashboard.
+
+* agent_rules.md
+  - Purpose: Code development rules and standards (PEP 8, Clean Code) for AI.
+
+* .gitignore
+  - Purpose: Excludes utility files (databases, virtual environment folders, logs) from Git commits.
+
+--------------------------------------------------------------------------------
+4. General Launch Commands (for utility scripts and tests)
+--------------------------------------------------------------------------------
+
+* backup.bat (Backup script in the root directory):
+  & "C:\hvoi\Projekt q1\backup.bat"
+
+* Run full test suite (pytest):
+  & "C:\hvoi\Projekt q1\Testnet binance vision AI\.venv\Scripts\python.exe" -m pytest "C:\hvoi\Projekt q1\Testnet binance vision AI\tests"

@@ -1,0 +1,14 @@
+.env
+*.sqlite3
+news_history.csv
+trade_history.csv
+trades.csv
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+config.json
+*.csv
+*.sqlite3
+*.session
+desktop.ini
