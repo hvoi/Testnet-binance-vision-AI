@@ -7,7 +7,7 @@ load_dotenv()
 
 api_key = os.getenv("GEMINI_API_KEY")
 
-if api_key and api_key != "AIzaSyYourActualKeyGoesHere":
+if api_key and api_key != "":
     API_URL = os.getenv("AI_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions")
     MODEL_NAME = os.getenv("AI_MODEL_NAME", "gemini-2.5-flash")
 else:
