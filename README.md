@@ -26,9 +26,9 @@ A high-performance asynchronous Python trading bot that combines technical marke
 * Set up stream processing of CSV trade logs and automatic generation of interactive profit charts.
 
 ## 📁 Repository Architecture
-  * `dashboard.py` — Streamlit frontend analytics dashboard.
 * `Testnet binance vision AI/` — Bot's working directory.
   * `live_trader.py` — Main engine for trading cycle and logic.
   * `ai_service.py` — Module for LLM integration and JSON response parsing.
   * `news_parser.py` — High-speed news stream parser.
   * `notifier.py` — Asynchronous Telegram notification module for trades and risk management.
+  *  `dashboard.py` — Streamlit frontend analytics dashboard.
